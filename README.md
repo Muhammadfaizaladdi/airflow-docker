@@ -20,7 +20,7 @@ curl -LfO 'https://airflow.apache.org/docs/apache-airflow/2.2.2/docker-compose.y
 
 File ini berisi beberapa definisi service seperti:
 
-- **airflow-scheduler **- Penjadwal memantau semua tugas dan DAG, lalu memicu instance tugas setelah dependensinya selesai.
+- **airflow-scheduler** - Penjadwal memantau semua tugas dan DAG, lalu memicu instance tugas setelah dependensinya selesai.
 
 - **airflow-webserver** - Server web tersedia di http://localhost:8080.
 
