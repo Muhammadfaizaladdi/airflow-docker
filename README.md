@@ -13,14 +13,14 @@ Ikuti langkah-langkah ini untuk menginstal dependencies yang diperlukan.
 
 ## docker-compose.yaml
 
-Untuk men-deploy Airflow di Docker Compose, Anda harus mengunduh [docker-compose.yaml](https://airflow.apache.org/docs/apache-airflow/stable/docker-compose.yaml). Atau menggunakan command curl berikut. 
+Untuk men-deploy Airflow di Docker Compose, Anda harus mengunduh [docker-compose.yaml](https://airflow.apache.org/docs/apache-airflow/stable/docker-compose.yaml). Atau menggunakan command curl berikut. Sebagai contoh: Buatlah folder airflow-docker pada komputermu, dan eksekusi command dibawah ini didalam direktori tersebut
 ```
 curl -LfO 'https://airflow.apache.org/docs/apache-airflow/2.2.2/docker-compose.yaml'
 ```
 
 File ini berisi beberapa definisi service seperti:
 
-- **airflow-scheduler** - Penjadwal memantau semua tugas dan DAG, lalu memicu instance tugas setelah dependensinya selesai.
+- **airflow-scheduler** - Scheduler unruk memantau semua tasks dan DAG, lalu menginisiasi worker instance ketika semua dependensinya terpenuhi.
 
 - **airflow-webserver** - Server web tersedia di http://localhost:8080.
 
@@ -33,3 +33,47 @@ File ini berisi beberapa definisi service seperti:
 - **postgres** - Backend metadata dari airflow.
 
 - **redis** - broker yang meneruskan pesan dari scheduler ke worker.
+
+Semua services ini memungkinkan kamu untuk menjalankan Airflow dengan [CeleryExecutor](https://airflow.apache.org/docs/apache-airflow/stable/executor/celery.html).
+
+Beberapa direktori dalam container telah di-mount, yang berarti bahwa isinya disinkronkan antara komputer dan container.
+- ./dags - kamu dapat meletakkan file DAG di sini.
+- ./logs - berisi log dari eksekusi worker dan scheduler.
+- ./plugins - kamu dapat meletakkan plugin khusus Anda di sini.
+
+
+## Initializing Environment
+
+Sebelum memulai Airflow untuk pertama kalinya, kamu perlu menyiapkan environemt terlebih dahulu, yaitu membuat file, direktori, dan menginisialisasi database yang diperlukan.
+
+Didalam folder yang telah dibuat sebelumnya diatas, eksekusi command dibawah ini.
+
+```
+mkdir -p ./dags ./logs ./plugins
+echo -e "AIRFLOW_UID=$(id -u)" > .env
+```
+
+## Initialize the database
+
+Untuk semua sistem operasi, kamu perlu menjalankan melakikan migrasi database dan membuat akun pengguna pertama. Untuk melakukannya, lakukan command berikut.
+
+```docker-compose up airflow-init```
+
+Lalu akan muncul log seperti berikut ketika command berhasil dijalankan
+
+```
+airflow-init_1       | Upgrades done
+airflow-init_1       | Admin user airflow created
+airflow-init_1       | 2.2.2
+start_airflow-init_1 exited with code 0
+```
+
+Akun yang dibuat memiliki login **airflow** dan password **airflow**.
+
+
+## Running Airflow
+
+Sekarang kamu dapat memulai semua service dengan command dibawah ini:
+
+```docker-compose up```
+
