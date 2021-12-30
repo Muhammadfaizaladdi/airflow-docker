@@ -6,7 +6,7 @@ from airflow.models import Variable
 from airflow.contrib.operators.bigquery_operator import BigQueryOperator
 from airflow.contrib.operators.bigquery_check_operator import BigQueryCheckOperator
 
-DAG_ID = 'bigquery_github_trends'
+DAG_ID = 'bigquery_github_trends_dag'
 
 # Config variables
 dag_config = Variable.get(DAG_ID, deserialize_json=True)
