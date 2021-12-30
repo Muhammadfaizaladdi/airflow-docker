@@ -1,0 +1,12 @@
+{
+  "interval": "",
+  "gcp_conn_id": "gcp_conn_id",
+  "start_date": "2021-08-10 00:12:15",
+  "project_id": "",
+  "migrations": [
+    {
+      "dataset_name": "my_dataset",
+      "table_name": "__inf02"
+    }
+  ]
+}
