@@ -8,8 +8,8 @@
     "start_date": "2021-12-13 00:12:15",
     "migrations": [
       {
-        "query" : "CONVERSION_TO_PREMIUM",
-        "dataset_name": "phm_be_finance_view"
+        "query" : "HACKERNEWS_COMMENT",
+        "dataset_name": "eastern-road-224512"
       }
     ]
   }
