@@ -47,8 +47,8 @@ completed = DummyOperator(
 
 for migration in migrations:
     DATASET_NAME = os.environ.get("GCP_BIGQUERY_DATASET_NAME", migration["dataset_name"])
-    insert_query_job = BigQueryInsertJobOperator(
-            task_id="insert_query_job_" + migration["query"],
+    query_job = BigQueryInsertJobOperator(
+            task_id="query_job_" + migration["query"],
             configuration={
                 "query": {
                     "query": sql_query[migration["query"]],
@@ -60,4 +60,4 @@ for migration in migrations:
         )    
 
 
-    start >> insert_query_job >> completed
+    start >> query_job >> completed
