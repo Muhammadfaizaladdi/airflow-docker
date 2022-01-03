@@ -31,7 +31,7 @@ dag = DAG(
     schedule_interval=configs['interval'])
 
 migrations = configs.get('migrations', [])
-sql_query = allv407.SQL_QUERY
+sql_query = hackernews_sql.SQL_QUERY
 
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = configs["service_account"]
 PROJECT_ID = os.environ.get("GCP_PROJECT_ID", configs["project_id"])
