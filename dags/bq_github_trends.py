@@ -103,12 +103,12 @@ t3 = BigQueryOperator(
           repo
         ''',
         destination_dataset_table='{0}.{1}.github_daily_metrics${2}'.format(
-            configs['BQ_PROJECT'], configs['BQ_DATASET'], '{{ yesterday_ds_nodash }}'
+            configs['project_id'], configs['BQ_DATASET'], '{{ yesterday_ds_nodash }}'
         ),    
         write_disposition='WRITE_TRUNCATE',
         allow_large_results=True,
         use_legacy_sql=False,
-        bigquery_conn_id=configs['BQ_CONN_ID'],
+        bigquery_conn_id=configs['gcp_conn_id'],
         dag=dag
     )
 
@@ -141,19 +141,19 @@ t4 = BigQueryOperator(
         GROUP BY
           date,
           repo
-        '''.format(configs['BQ_PROJECT'], configs['BQ_DATASET'],
+        '''.format(configs['project_id'], configs['BQ_DATASET'],
             "{{ yesterday_ds_nodash }}", "{{ yesterday_ds }}",
             "{{ macros.ds_add(ds, -6) }}",
             "{{ macros.ds_add(ds, -27) }}"
             )
         ,
         destination_dataset_table='{0}.{1}.github_agg${2}'.format(
-            configs['BQ_PROJECT'], configs['BQ_DATASET'], '{{ yesterday_ds_nodash }}'
+            configs['project_id'], configs['BQ_DATASET'], '{{ yesterday_ds_nodash }}'
         ),
         write_disposition='WRITE_TRUNCATE',
         allow_large_results=True,
         use_legacy_sql=False,
-        bigquery_conn_id=configs['BQ_CONN_ID'],
+        bigquery_conn_id=configs['gcp_conn_id'],
         dag=dag
     )
 
@@ -183,12 +183,12 @@ t5 = BigQueryOperator(
       url
     ''',
     destination_dataset_table='{0}.{1}.hackernews_agg${2}'.format(
-        configs['BQ_PROJECT'], configs['BQ_DATASET'], '{{ yesterday_ds_nodash }}'
+        configs['project_id'], configs['BQ_DATASET'], '{{ yesterday_ds_nodash }}'
     ),
     write_disposition='WRITE_TRUNCATE',
     allow_large_results=True,
     use_legacy_sql=False,
-    bigquery_conn_id=configs['BQ_CONN_ID'],
+    bigquery_conn_id=configs['gcp_conn_id'],
     dag=dag
     )
 
@@ -233,15 +233,15 @@ t6 = BigQueryOperator(
       ) as b
     ON a.url = b.url
     '''.format(
-            configs['BQ_PROJECT'], configs['BQ_DATASET'], "{{ yesterday_ds }}"
+            configs['project_id'], configs['BQ_DATASET'], "{{ yesterday_ds }}"
         ),
     destination_dataset_table='{0}.{1}.hackernews_github_agg${2}'.format(
-        configs['BQ_PROJECT'], configs['BQ_DATASET'], '{{ yesterday_ds_nodash }}'
+        configs['project_id'], configs['BQ_DATASET'], '{{ yesterday_ds_nodash }}'
     ),
     write_disposition='WRITE_TRUNCATE',
     allow_large_results=True,
     use_legacy_sql=False,
-    bigquery_conn_id=configs['BQ_CONN_ID'],
+    bigquery_conn_id=configs['gcp_conn_id'],
     dag=dag
     )
 
@@ -254,10 +254,10 @@ t7 = BigQueryCheckOperator(
         COUNT(*) AS rows_in_partition
     FROM `{0}.{1}.hackernews_github_agg`    
     WHERE _PARTITIONDATE = "{2}"
-    '''.format(configs['BQ_PROJECT'], configs['BQ_DATASET'], '{{ yesterday_ds }}'
+    '''.format(configs['project_id'], configs['BQ_DATASET'], '{{ yesterday_ds }}'
         ),
     use_legacy_sql=False,
-    bigquery_conn_id=configs['BQ_CONN_ID'],
+    bigquery_conn_id=configs['gcp_conn_id'],
     dag=dag)
 
 # Setting up Dependencies
