@@ -1,5 +1,15 @@
 # airflow-docker
 
+Note: untuk meng-clone repo ini pada local computer, 
+ ```
+ 1. cd ke folder installasi Airflow, misal airflow-docker/
+ 2. git init
+ 3. git checkout -b main
+ 4. git remote add origin https://github.com/AnggaPradiktas/airflow-docker.git
+ 5. git checkout --track origin/main
+ 6. git pull
+ ```
+
 ## Running Airflow in Docker
 
 Dokumen ini berisi panduan dasar untuk menginstal Airflow pada komputer Anda menggunakan Docker, airflow akan dijalankan pada CeleryExecutor. Dokumen ini diperuntukkan untuk pengguna Airflow tahap awal untuk menjadi lebih familiar terhadap database system Airflow.
