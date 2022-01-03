@@ -1,14 +1,5 @@
 # airflow-docker
 
-Note: untuk meng-clone repo ini pada local computer, 
- ```
- 1. cd ke folder installasi Airflow, misal airflow-docker/
- 2. git init
- 3. git checkout -b main
- 4. git remote add origin https://github.com/AnggaPradiktas/airflow-docker.git
- 5. git checkout --track origin/main
- 6. git pull
- ```
 
 ## Running Airflow in Docker
 
@@ -86,4 +77,16 @@ Akun yang dibuat memiliki login **airflow** dan password **airflow**.
 Sekarang kamu dapat memulai semua service dengan command dibawah ini:
 
 ```docker-compose up```
+
+
+
+Note: untuk meng-clone repo ini pada local computer, 
+ ```
+ 1. cd ke folder installasi Airflow, misal airflow-docker/
+ 2. git init
+ 3. git checkout -b main
+ 4. git remote add origin https://github.com/AnggaPradiktas/airflow-docker.git
+ 5. git checkout --track origin/main
+ 6. git pull
+ ```
 
