@@ -8,7 +8,7 @@ from airflow.operators.dummy import DummyOperator
 from sql import hackernews_insert_sql
 from airflow.providers.google.cloud.operators.bigquery import BigQueryInsertJobOperator
 
-DAG_ID = 'bq_query_example_dag'
+DAG_ID = 'bq_insert_example_dag'
 
 configs = Variable.get(DAG_ID, deserialize_json=True)
 
