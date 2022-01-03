@@ -54,7 +54,7 @@ t1 = BigQueryCheckOperator(
           table_id = "{{ yesterday_ds_nodash }}"
         ''',
         use_legacy_sql=False,
-        bigquery_conn_id=configs['BQ_CONN_ID'],
+        bigquery_conn_id=configs['gcp_conn_id'],
         dag=dag
     )
 
@@ -74,7 +74,7 @@ t2 = BigQueryCheckOperator(
           1
         ''',
         use_legacy_sql=False,
-        bigquery_conn_id=configs['BQ_CONN_ID'],
+        bigquery_conn_id=configs['gcp_conn_id'],
         dag=dag
     )
 
