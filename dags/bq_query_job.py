@@ -5,7 +5,7 @@ from airflow.models import Variable
 from datetime import datetime, timedelta
 from airflow.models import DAG
 from airflow.operators.dummy import DummyOperator
-from sql import query_update_manual_sql
+from sql import hackernews_sql
 from airflow.providers.google.cloud.operators.bigquery import BigQueryInsertJobOperator
 
 DAG_ID = 'bq_query_example_dag'
