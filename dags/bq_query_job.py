@@ -26,12 +26,12 @@ dag = DAG(
     DAG_ID,
     default_args=default_args,
     max_active_runs=1,
-    description='Query Daily Update Example',
+    description='Query Daily Example',
     tags=['bigquery'],
     schedule_interval=configs['interval'])
 
 migrations = configs.get('migrations', [])
-sql_query = query_update_manual_sql.SQL_QUERY
+sql_query = allv407.SQL_QUERY
 
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = configs["service_account"]
 PROJECT_ID = os.environ.get("GCP_PROJECT_ID", configs["project_id"])
