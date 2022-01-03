@@ -10,9 +10,7 @@ DAG_ID = 'bigquery_github_trends_dag'
 
 # Config variables
 configs = Variable.get(DAG_ID, deserialize_json=True)
-# BQ_CONN_ID = dag_config["bq_conn_id"]
-# BQ_PROJECT = dag_config["bq_project"]
-# BQ_DATASET = dag_config["bq_dataset"]
+
 
 default_args = {
     'owner': 'Angga',
