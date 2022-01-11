@@ -23,6 +23,7 @@ import os
 import time
 from datetime import datetime
 from urllib.parse import urlparse
+from alert import slack_alerts
 
 from airflow import models
 from airflow.operators.bash import BashOperator
@@ -56,12 +57,17 @@ DATA_SAMPLE_GCS_URL_PARTS = urlparse(DATA_SAMPLE_GCS_URL)
 DATA_SAMPLE_GCS_BUCKET_NAME = DATA_SAMPLE_GCS_URL_PARTS.netloc
 DATA_SAMPLE_GCS_OBJECT_NAME = DATA_SAMPLE_GCS_URL_PARTS.path[1:]
 
+default_args = {
+    'on_failure_callback': slack_alerts.task_send_failure_slack_alert
+}
+
 
 with models.DAG(
     "example_bigquery_operations",
     schedule_interval='@once',  # Override to match your needs
     start_date=START_DATE,
     catchup=False,
+    default_args=default_args,
     tags=["example"],
 ) as dag:
     # [START howto_operator_bigquery_create_table]
@@ -243,6 +249,7 @@ with models.DAG(
     schedule_interval='@once',  # Override to match your needs
     start_date=START_DATE,
     catchup=False,
+    default_args=default_args,
     tags=["example"],
 ) as dag_with_location:
     create_dataset_with_location = BigQueryCreateEmptyDatasetOperator(
