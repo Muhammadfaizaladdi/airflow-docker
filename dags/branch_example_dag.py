@@ -4,13 +4,20 @@ import random
 from datetime import datetime
 
 from airflow import DAG
+from alert import slack_alerts
 from airflow.operators.dummy import DummyOperator
 from airflow.operators.python import BranchPythonOperator
 from airflow.utils.edgemodifier import Label
 from airflow.utils.trigger_rule import TriggerRule
 
+
+default_args = {
+    'on_failure_callback': slack_alerts.task_send_failure_slack_alert
+}
+
 with DAG(
     dag_id='example_branch_operator',
+    default_args=default_args,
     start_date=datetime(2021, 1, 1),
     catchup=False,
     schedule_interval="@daily",

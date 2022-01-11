@@ -1,6 +1,6 @@
 import json
 from datetime import timedelta, datetime
-
+from alert import slack_alerts
 from airflow import DAG
 from airflow.models import Variable
 from airflow.contrib.operators.bigquery_operator import BigQueryOperator
@@ -22,6 +22,7 @@ default_args = {
     'email_on_retry': False,
     'retries': 2,
     'retry_delay': timedelta(minutes=2),
+    'on_failure_callback': slack_alerts.task_send_failure_slack_alert
 }
 
 # Set Schedule: Run pipeline once a day. 

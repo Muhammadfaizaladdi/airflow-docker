@@ -1,6 +1,6 @@
 import os
 from airflow import models
-import logging
+from alert import slack_alerts
 from airflow.models import Variable
 from datetime import datetime, timedelta
 from airflow.models import DAG
@@ -19,7 +19,8 @@ default_args = {
     'email_on_failure': False,
     'email_on_retry': False,
     'retries': 2,
-    'retry_delay': timedelta(minutes=1)
+    'retry_delay': timedelta(minutes=1),
+    'on_failure_callback': slack_alerts.task_send_failure_slack_alert
 }
 
 dag = DAG(
